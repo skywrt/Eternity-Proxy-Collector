@@ -1,0 +1,37 @@
+name: Node Checker
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Install Xray
+      run: |
+        mkdir -p /tmp/xray
+        curl -L -o /tmp/xray/xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
+        unzip /tmp/xray/xray.zip -d /tmp/xray
+        sudo mv /tmp/xray/xray /usr/local/bin/xray
+        sudo chmod +x /usr/local/bin/xray
+
+    - name: Run Node Checker
+      run: python main.py
