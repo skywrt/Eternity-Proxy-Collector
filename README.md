@@ -1,14 +1,12 @@
-# Clash Subscription Generator
+# V2ray-Clash-Node-Checker
 
-## 项目简介
-这个项目用于获取节点、测试节点速度并生成 Clash 订阅链接。
+这个项目用于从指定的Base64编码节点链接中提取节点，进行测速分析，剔除不可用的节点，并生成适用于v2rayN和Clash代理软件的配置文件。
 
 ## 使用方法
 
 1. 克隆项目：
     ```
-    git clone https://github.com/yourusername/clash-subscription.git
-    cd clash-subscription
+    git clone https://github.com/your-username/V2ray-Clash-Node-Checker.git
     ```
 
 2. 安装依赖：
@@ -16,20 +14,13 @@
     pip install -r requirements.txt
     ```
 
-3. 获取节点：
+3. 运行主脚本：
     ```
-    python node_fetcher.py
-    ```
-
-4. 测试节点速度：
-    ```
-    python speed_test.py
+    python main.py
     ```
 
-5. 生成 Clash 订阅链接：
-    ```
-    python generate_clash.py
-    ```
+4. 生成的配置文件将会保存在`config`目录下。
 
-## 注意事项
-- 请确保替换示例代码中的 API URL 和节点信息为实际的内容。
+## GitHub Actions
+
+该项目已配置GitHub Actions工作流，每次代码推送或每天定期执行，将自动进行节点的测速和配置文件的生成。
