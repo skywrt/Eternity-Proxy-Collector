@@ -3,6 +3,7 @@ import subprocess
 import json
 
 def decode_base64(data):
+    print(f"Decoding base64 data: {data[:100]}")  # 打印前100个字符进行检查
     decoded_bytes = base64.b64decode(data.strip())
     decoded_str = decoded_bytes.decode('utf-8')
     return decoded_str.splitlines()
