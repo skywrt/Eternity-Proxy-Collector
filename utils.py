@@ -1,16 +1,18 @@
-import base64
-import subprocess
-import json
+import base64 as pybase64
+import binascii
 
 def decode_base64(encoded):
-
     decoded = ''
     for encoding in ['utf-8', 'iso-8859-1']:
         try:
-            decoded = pybase64.b64decode(encoded + b'=' * (-len(encoded) % 4)).decode(encoding)
+            # Padding with '=' to make the length of encoded string a multiple of 4
+            padded_encoded = encoded + '=' * (-len(encoded) % 4)
+            # Decode the Base64 encoded string
+            decoded = pybase64.b64decode(padded_encoded).decode(encoding)
             break
-        except (UnicodeDecodeError, binascii.Error):
-            pass
+        except (UnicodeDecodeError, binascii.Error) as e:
+            print(f"Decoding error with encoding {encoding}: {e}")
+            continue
     return decoded
 
 def test_node_availability(node):
