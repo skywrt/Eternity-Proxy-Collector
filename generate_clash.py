@@ -1,27 +1,26 @@
-# generate_clash.py
-def generate_clash(nodes):
-    clash_config = {
-        "proxies": [],
-        "proxy-groups": []
-    }
-    for node in nodes:
-        clash_config["proxies"].append({
-            "name": node['name'],
-            "type": "ss",
-            "server": node['server'],
-            "port": node['port'],
-            "cipher": node['cipher'],
-            "password": node['password']
-        })
-    
-    # 这里你可以根据需求添加 proxy-groups
+def generate_clash_config():
+    with open('decoded_configs.txt', 'r') as f:
+        configs = f.readlines()
 
-    return clash_config
+    clash_config = {
+        "outbounds": [
+            {
+                "tag": "proxy",
+                "protocol": "vmess",
+                "settings": {
+                    "vnext": []
+                }
+            }
+        ]
+    }
+
+    for config in configs:
+        # 这里解析每个节点的配置并添加到 clash_config 中
+        # 假设每行是一个节点的配置
+        # 需要根据实际配置格式进行解析
+
+    with open('clash_config.yaml', 'w') as f:
+        f.write(str(clash_config))  # 根据实际格式保存为 YAML
 
 if __name__ == "__main__":
-    nodes = [
-        {"name": "Node1", "server": "node1.example.com", "port": 12345, "cipher": "aes-256-gcm", "password": "password1"},
-        # 添加更多节点
-    ]
-    clash_config = generate_clash(nodes)
-    print(clash_config)
+    generate_clash_config()
