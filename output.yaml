@@ -1,1 +1,17 @@
-outbounds: []
+outbounds:
+- protocol: vmess
+  settings:
+    vnext:
+    - address: example.com
+      port: 10086
+      users:
+      - alterId: 64
+        id: uuid
+- protocol: vmess
+  settings:
+    vnext:
+    - address: example.com
+      port: 10086
+      users:
+      - alterId: 64
+        id: uuid
