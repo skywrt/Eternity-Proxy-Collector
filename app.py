@@ -5,6 +5,9 @@ import yaml
 
 def decode_base64(encoded):
     try:
+        if isinstance(encoded, str):
+            encoded = encoded.encode('utf-8')
+
         decoded = pybase64.b64decode(encoded + b'=' * (-len(encoded) % 4)).decode('utf-8')
         return decoded
     except Exception as e:
