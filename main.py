@@ -2,7 +2,6 @@ import argparse
 import requests
 import base64
 import yaml
-import json
 from v2ray_config import decode_base64, generate_v2ray_configs
 from clash_config import generate_clash_configs
 from utils import log, save_to_file, test_proxies
