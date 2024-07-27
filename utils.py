@@ -14,9 +14,8 @@ def test_node_availability(node):
         with open('test_config.json', 'w') as f:
             json.dump(config, f)
         
-        # 使用xray来测试节点连通性
         result = subprocess.run(['xray', 'run', '-c', 'test_config.json'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=15)
-        print(f"Testing node {node}, return code: {result.returncode}")  # 添加调试输出
+        print(f"Testing node {node}, return code: {result.returncode}, stderr: {result.stderr.decode()}")  # 打印错误信息
         return result.returncode == 0
     except Exception as e:
         print(f"Error testing node {node}: {e}")
