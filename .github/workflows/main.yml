@@ -15,11 +15,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: List files for debugging
-      run: |
-        echo "Listing files in the repository:"
-        ls -R # 递归列出所有文件和目录
-
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -30,28 +25,19 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Install Xray
-      run: |
-        mkdir -p /tmp/xray
-        curl -L -o /tmp/xray/xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
-        unzip /tmp/xray/xray.zip -d /tmp/xray
-        sudo mv /tmp/xray/xray /usr/local/bin/xray
-        sudo chmod +x /usr/local/bin/xray
-
     - name: Run Node Checker
       run: python main.py config/main.yml config/clash_nodes.yaml
-      # 传递配置路径和输出路径作为命令行参数
 
     - name: Check generated files
       run: |
-        cat config/v2rayn_nodes_base64.txt || echo "V2rayN file not found or empty"
+        cat v2rayn_nodes_base64.txt || echo "V2rayN file not found or empty"
         cat config/clash_nodes.yaml || echo "Clash file not found or empty"
 
     - name: Commit results
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add config/v2rayn_nodes_base64.txt config/clash_nodes.yaml
+        git add v2rayn_nodes_base64.txt config/clash_nodes.yaml
         git commit -m 'Update node configurations' || echo "No changes to commit"
         git push
       env:
