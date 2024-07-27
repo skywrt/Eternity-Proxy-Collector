@@ -50,16 +50,16 @@ def main():
 
     decoded_data = []
 
-for link in links:
-    response = requests.get(link)
-    if response.status_code == 200:
-        encoded_links = response.text.splitlines()
-        for encoded in encoded_links:
-            print(f"Encoded link: {encoded}")  # 打印编码的链接
-            decoded = decode_base64(encoded)
-            if decoded:
-                print(f"Decoded node: {decoded}")  # 打印解码后的节点
-                decoded_data.append(decoded)
+    for link in links:  # 确保这一行在 main 函数的范围内
+        response = requests.get(link)
+        if response.status_code == 200:
+            encoded_links = response.text.splitlines()
+            for encoded in encoded_links:
+                print(f"Encoded link: {encoded}")  # 打印编码的链接
+                decoded = decode_base64(encoded)
+                if decoded:
+                    print(f"Decoded node: {decoded}")  # 打印解码后的节点
+                    decoded_data.append(decoded)
 
     clash_config = generate_clash_config(decoded_data)
 
