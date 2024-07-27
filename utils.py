@@ -1,5 +1,6 @@
 import base64
-import requests
+import subprocess
+import json
 
 def decode_base64(data):
     decoded_bytes = base64.b64decode(data)
@@ -8,15 +9,66 @@ def decode_base64(data):
 
 def test_node_availability(node):
     try:
-        # 测试节点速度
-        speed_test_response = requests.get('https://speed.cloudflare.com', proxies={'http': node, 'https': node}, timeout=5)
-        speed_test_success = speed_test_response.status_code == 200
-
-        # 测试节点连通性
-        connectivity_test_response = requests.get('https://www.google.com/generate_204', proxies={'http': node, 'https': node}, timeout=5)
-        connectivity_test_success = connectivity_test_response.status_code == 204
-
-        return speed_test_success and connectivity_test_success
+        config = create_xray_config(node)
+        with open('test_config.json', 'w') as f:
+            json.dump(config, f)
+        
+        # 使用xray来测试节点连通性
+        result = subprocess.run(['xray', 'test', '-c', 'test_config.json'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=15)
+        return result.returncode == 0
     except Exception as e:
         print(f"Error testing node {node}: {e}")
         return False
+
+def create_xray_config(node):
+    # 这里应添加解析节点并生成适用于xray的配置逻辑
+    # 目前只是一个示例，需根据实际情况修改
+    return {
+        "log": {
+            "loglevel": "warning"
+        },
+        "inbounds": [],
+        "outbounds": [
+            {
+                "protocol": "freedom",
+                "settings": {},
+                "tag": "direct"
+            },
+            {
+                "protocol": "blackhole",
+                "settings": {},
+                "tag": "blocked"
+            },
+            {
+                "protocol": "vmess",
+                "settings": {
+                    "vnext": [
+                        {
+                            "address": "example.com",
+                            "port": 443,
+                            "users": [
+                                {
+                                    "id": "your-uuid-here",
+                                    "alterId": 64,
+                                    "security": "auto"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "tag": "proxy"
+            }
+        ],
+        "routing": {
+            "domainStrategy": "IPOnDemand",
+            "rules": [
+                {
+                    "type": "field",
+                    "outboundTag": "proxy",
+                    "domain": [
+                        "geosite:google"
+                    ]
+                }
+            ]
+        }
+    }
