@@ -3,7 +3,12 @@ import os
 import base64
 
 def initialize_files(file_paths):
-    for path in file_paths:
+    # Ensure that the directories exist
+    for path in file_paths.values():
+        directory = os.path.dirname(path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        # Create or clear the files
         open(path, "w").close()
 
 def download_and_process_config(url, file_paths):
@@ -44,7 +49,7 @@ def main():
         "ssr": os.path.join(base_path, 'Splitted-By-Protocol/ssr.txt')
     }
 
-    initialize_files(file_paths.values())
+    initialize_files(file_paths)
     url = "https://raw.githubusercontent.com/hkpc/V2ray-Configs/main/All_Configs_Sub.txt"
     download_and_process_config(url, file_paths)
 
