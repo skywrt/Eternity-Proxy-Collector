@@ -1,0 +1,50 @@
+name: Process V2Ray Configurations
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.8'  # 可以根据需要更改 Python 版本
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Download and process V2Ray configs
+      run: |
+        # 下载 Base64 编码的节点链接
+        curl -o All_Configs_base64_Sub.txt https://raw.githubusercontent.com/hkpc/V2ray-Configs/main/All_Configs_base64_Sub.txt
+        curl -o Long_term_subscription_num https://raw.githubusercontent.com/hkpc/Autoproxy/main/Long_term_subscription_num
+        
+        # 运行 node_fetcher.py 脚本来解码并处理节点
+        python node_fetcher.py
+        
+        # 运行 generate_clash.py 脚本来生成 Clash 配置
+        python generate_clash.py
+        
+        # 运行 speed_test.py 脚本来测试节点速度
+        python speed_test.py
+
+    - name: Commit and push results
+      run: |
+        git config --local user.email '${{ secrets.EMAIL }}'
+        git config --local user.name '${{ secrets.NAME }}'
+        git add .
+        git commit -m "Update configs and results"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
