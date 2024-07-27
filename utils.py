@@ -3,7 +3,7 @@ import subprocess
 import json
 
 def decode_base64(data):
-    decoded_bytes = base64.b64decode(data)
+    decoded_bytes = base64.b64decode(data.strip())
     decoded_str = decoded_bytes.decode('utf-8')
     return decoded_str.splitlines()
 
@@ -15,6 +15,7 @@ def test_node_availability(node):
         
         # 使用xray来测试节点连通性
         result = subprocess.run(['xray', 'run', '-c', 'test_config.json'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=15)
+        print(f"Testing node {node}, return code: {result.returncode}")  # 添加调试输出
         return result.returncode == 0
     except Exception as e:
         print(f"Error testing node {node}: {e}")
