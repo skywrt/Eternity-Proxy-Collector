@@ -1,61 +1,24 @@
-import requests
-import os
-from utils import decode_base64, test_node_availability
-from v2ray_config import generate_v2rayn_base64
-from clash_config import generate_clash_yaml
+import argparse
+from v2ray_config import generate_v2ray_config, parse_v2ray_config
+from clash_config import generate_clash_config, save_clash_config
+from utils import log
 
-V2RAYN_URL = 'https://raw.githubusercontent.com/hkpc/V2ray-Configs/main/All_Configs_base64_Sub.txt'
-CLASH_URL = 'https://raw.githubusercontent.com/hkpc/Autoproxy/main/Long_term_subscription_num'
+def main(config_path: str, output_path: str) -> None:
+    try:
+        with open(config_path, 'r', encoding='utf-8') as file:
+            config_str = file.read()
 
-def fetch_content(url):
-    print(f"Fetching content from {url}...")  # 添加打印输出
-    response = requests.get(url)
-    response.raise_for_status()
-    print(f"Successfully fetched content from {url}")  # 添加打印输出
-    return response.text
-
-def main():
-    print("Starting the script...")  # 添加打印输出
-    
-    # 创建config目录
-    os.makedirs('config', exist_ok=True)
-    print("Created 'config' directory if it didn't exist.")  # 添加打印输出
-    
-    # Fetch base64 encoded node lists
-    print("Fetching V2rayN base64 nodes...")
-    v2rayn_base64 = fetch_content(V2RAYN_URL)
-    
-    print("Fetching Clash base64 nodes...")
-    clash_base64 = fetch_content(CLASH_URL)
-
-    # Decode the base64 lists
-    print("Decoding V2rayN base64 nodes...")
-    v2rayn_nodes = decode_base64(v2rayn_base64)
-    print(f"Decoded {len(v2rayn_nodes)} V2rayN nodes.")  # 打印解码节点的数量
-    
-    print("Decoding Clash base64 nodes...")
-    clash_nodes = decode_base64(clash_base64)
-    print(f"Decoded {len(clash_nodes)} Clash nodes.")  # 打印解码节点的数量
-
-    # Test node availability
-    print("Testing availability of V2rayN nodes...")
-    available_v2rayn_nodes = [node for node in v2rayn_nodes if test_node_availability(node)]
-    print(f"Available V2rayN nodes: {len(available_v2rayn_nodes)}")  # 打印可用节点的数量
-    
-    print("Testing availability of Clash nodes...")
-    available_clash_nodes = [node for node in clash_nodes if test_node_availability(node)]
-    print(f"Available Clash nodes: {len(available_clash_nodes)}")  # 打印可用节点的数量
-
-    # Generate configuration files
-    print("Generating V2rayN configuration file...")
-    generate_v2rayn_base64(available_v2rayn_nodes, 'config/v2rayn_nodes_base64.txt')
-    print("V2rayN configuration file generated.")
-    
-    print("Generating Clash configuration file...")
-    generate_clash_yaml(available_clash_nodes, 'config/clash_nodes.yaml')
-    print("Clash configuration file generated.")
-
-    print("Script completed successfully.")  # 添加打印输出
+        proxies = parse_v2ray_config(config_str).get('outbounds', [{}])[0].get('settings', {}).get('vnext', [])
+        clash_config = generate_clash_config(proxies, [])
+        save_clash_config(clash_config, output_path)
+        log('配置转换成功！')
+    except Exception as e:
+        log(f'主程序出错: {e}')
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='转换 V2Ray 配置为 Clash 配置')
+    parser.add_argument('config_path', type=str, help='V2Ray 配置文件路径')
+    parser.add_argument('output_path', type=str, help='Clash 配置输出文件路径')
+    args = parser.parse_args()
+
+    main(args.config_path, args.output_path)
