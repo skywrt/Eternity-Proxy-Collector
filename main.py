@@ -15,36 +15,38 @@ def fetch_content(url):
     return response.text
 
 def main():
-    print("Starting the script...")  # 添加打印输出
-    
+    print("Starting the script...")
+
     # 创建config目录
     os.makedirs('config', exist_ok=True)
-    print("Created 'config' directory if it didn't exist.")  # 添加打印输出
-    
+    print("Created 'config' directory if it didn't exist.")
+
     # Fetch base64 encoded node lists
     print("Fetching V2rayN base64 nodes...")
     v2rayn_base64 = fetch_content(V2RAYN_URL)
+    print(f"Fetched V2rayN base64 data: {v2rayn_base64[:500]}")  # 打印前500个字符进行检查
     
     print("Fetching Clash base64 nodes...")
     clash_base64 = fetch_content(CLASH_URL)
+    print(f"Fetched Clash base64 data: {clash_base64[:500]}")  # 打印前500个字符进行检查
 
     # Decode the base64 lists
     print("Decoding V2rayN base64 nodes...")
     v2rayn_nodes = decode_base64(v2rayn_base64)
-    print(f"Decoded {len(v2rayn_nodes)} V2rayN nodes.")  # 打印解码节点的数量
-    
+    print(f"Decoded V2rayN nodes: {v2rayn_nodes}")
+
     print("Decoding Clash base64 nodes...")
     clash_nodes = decode_base64(clash_base64)
-    print(f"Decoded {len(clash_nodes)} Clash nodes.")  # 打印解码节点的数量
+    print(f"Decoded Clash nodes: {clash_nodes}")
 
     # Test node availability
     print("Testing availability of V2rayN nodes...")
     available_v2rayn_nodes = [node for node in v2rayn_nodes if test_node_availability(node)]
-    print(f"Available V2rayN nodes: {len(available_v2rayn_nodes)}")  # 打印可用节点的数量
-    
+    print(f"Available V2rayN nodes: {available_v2rayn_nodes}")
+
     print("Testing availability of Clash nodes...")
     available_clash_nodes = [node for node in clash_nodes if test_node_availability(node)]
-    print(f"Available Clash nodes: {len(available_clash_nodes)}")  # 打印可用节点的数量
+    print(f"Available Clash nodes: {available_clash_nodes}")
 
     # Generate configuration files
     print("Generating V2rayN configuration file...")
@@ -55,7 +57,7 @@ def main():
     generate_clash_yaml(available_clash_nodes, 'config/clash_nodes.yaml')
     print("Clash configuration file generated.")
 
-    print("Script completed successfully.")  # 添加打印输出
+    print("Script completed successfully.")
 
 if __name__ == '__main__':
     main()
