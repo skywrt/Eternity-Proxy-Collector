@@ -1,4 +1,5 @@
 import requests
+import os
 from utils import decode_base64, test_node_availability
 from v2ray_config import generate_v2rayn_base64
 from clash_config import generate_clash_yaml
@@ -12,6 +13,9 @@ def fetch_content(url):
     return response.text
 
 def main():
+    # 创建config目录
+    os.makedirs('config', exist_ok=True)
+    
     # Fetch base64 encoded node lists
     v2rayn_base64 = fetch_content(V2RAYN_URL)
     clash_base64 = fetch_content(CLASH_URL)
