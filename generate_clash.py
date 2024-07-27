@@ -20,9 +20,15 @@ def generate_clash_config():
         # Assuming each line is a JSON formatted node
         # You need to parse the config line and append it to the clash_config
         # Example parsing (adjust according to actual format)
-        # node = json.loads(config)
+        # node = json.loads(config.strip())
         # clash_config['outbounds'][0]['settings']['vnext'].append(node)
 
+        # Ensure you add the parsed node to the clash_config here
+        # Example:
+        # if node:  # Check if node is valid
+        #     clash_config['outbounds'][0]['settings']['vnext'].append(node)
+
+    # Make sure this line is indented correctly
     with open('clash_config.yaml', 'w') as f:
         yaml.dump(clash_config, f)
 
