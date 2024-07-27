@@ -36,12 +36,17 @@ jobs:
     - name: Run Node Checker
       run: python main.py
 
+    - name: Check for file changes
+      run: |
+        git status
+        git diff
+
     - name: Commit results
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add config/v2rayn_nodes_base64.txt config/clash_nodes.yaml
-        git commit -m 'Update node configurations'
+        git commit -m 'Update node configurations' || echo "No changes to commit"
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
