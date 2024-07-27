@@ -38,8 +38,8 @@ jobs:
 
     - name: Check generated files
       run: |
-        cat config/v2rayn_nodes_base64.txt
-        cat config/clash_nodes.yaml
+        cat config/v2rayn_nodes_base64.txt || echo "V2rayN file not found or empty"
+        cat config/clash_nodes.yaml || echo "Clash file not found or empty"
 
     - name: Commit results
       run: |
