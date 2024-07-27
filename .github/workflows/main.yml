@@ -34,7 +34,8 @@ jobs:
         sudo chmod +x /usr/local/bin/xray
 
     - name: Run Node Checker
-      run: python main.py
+      run: python main.py config/main.yml config/clash_nodes.yaml
+      # 传递配置路径和输出路径作为命令行参数
 
     - name: Check generated files
       run: |
