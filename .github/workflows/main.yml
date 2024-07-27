@@ -13,10 +13,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: '3.x'
 
@@ -36,10 +36,10 @@ jobs:
     - name: Run Node Checker
       run: python main.py
 
-    - name: Check for file changes
+    - name: Check generated files
       run: |
-        git status
-        git diff
+        cat config/v2rayn_nodes_base64.txt
+        cat config/clash_nodes.yaml
 
     - name: Commit results
       run: |
