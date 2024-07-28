@@ -20,14 +20,17 @@ def url_updated(url):  # 判断远程远程链接是否已经更新
     return status == 200
 
 class update_url():
-    def update_main(use_airport=False, airports_id: [] = [5]):
+    def update_main(use_airport=False, airports_id=None, sub_list_json='./sub/sub_list.json'):
+        if airports_id is None:
+            airports_id = [5]
+        
         with open(sub_list_json, 'r', encoding='utf-8') as f:  # 载入订阅链接
             raw_list = json.load(f)
         
         for sub in raw_list:
             id = sub['id']
             current_url = sub['url']
-            if use_airport == False:
+            if not use_airport:
                 if id not in airports_id and sub['update_method'] != 'update_airports':
                     try:
                         if sub['update_method'] != 'auto' and sub['enabled']:
