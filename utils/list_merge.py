@@ -322,4 +322,4 @@ if __name__ == '__main__':
     sub_list_remote = sub_merge.read_list(sub_list_json, True)
 
     subs.get_subs_v3(list(filter(lambda x: x['id'] != 5, sub_list)))
-    sub_merge.readme_update(readme, sub_list)
+    readme_update('./README.md', sub_list)
