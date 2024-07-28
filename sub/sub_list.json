@@ -30,13 +30,5 @@
     "url": "https://raw.githubusercontent.com/hkpc/Autoproxy/main/Long_term_subscription_num",
     "update_method": "auto",
     "enabled": true
-  },
-  {
-    "id": 12,
-    "remarks": "peasoft/NoMoreWalls",
-    "site": "https://github.com/peasoft/NoMoreWalls",
-    "url": "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.txt",
-    "update_method": "auto",
-    "enabled": true
   }
 ]
