@@ -10,27 +10,6 @@ Eternity Proxy Collector 是一个自动化工具，旨在帮助用户管理和�
 - 测试代理节点的速度和可用性
 - 更新 README 文件以反映最新的节点信息
 
-# 文件说明
-
-## 脚本文件
-
-- **list_merge.py**：主脚本，用于收集、合并和测试代理订阅链接。
-- **sub_convert.py**：用于转换代理链接格式的脚本。
-- **update_url.py**：用于更新订阅链接的脚本。
-- **get_subs.py**：用于获取代理订阅链接的脚本。
-- **test_proxies.py**：用于测试代理节点速度和可用性的脚本。
-
-## 工具文件
-
-- **utils/localserver**：本地服务器相关代码。
-
-## 配置文件
-
-- **sub/sub_list.json**：包含所有订阅链接的 JSON 文件。
-- **sub/sub_merge.txt**：合并后的代理链接文本文件。
-- **sub/sub_merge_base64.txt**：合并后的 Base64 编码代理链接文件。
-- **sub/sub_merge_yaml.yml**：合并后的 YAML 格式代理链接文件。
-
 # 节点信息
 
 ## 高速节点
