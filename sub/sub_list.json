@@ -8,7 +8,7 @@
     "enabled": true
   },
   {
-    "id": 2,
+    "id": 1,
     "remarks": "hkpc/Autoproxy",
     "site": "https://github.com/hkpc/Autoproxy",
     "url": "https://raw.githubusercontent.com/hkpc/Autoproxy/main/Long_term_subscription_num",
@@ -16,7 +16,7 @@
     "enabled": true
   },
   {
-    "id": 3,
+    "id": 2,
     "remarks": "mahdibland/ShadowsocksAggregator",
     "site": "https://github.com/mahdibland/ShadowsocksAggregator",
     "url": "https://raw.githubusercontent.com/mahdibland/ShadowsocksAggregator/master/Eternity",
@@ -24,7 +24,7 @@
     "enabled": true
   },
   {
-    "id": 4,
+    "id": 3,
     "remarks": "hkpc/V2ray-Configs",
     "site": "https://github.com/hkpc/V2ray-Configs",
     "url": "https://raw.githubusercontent.com/hkpc/V2ray-Configs/main/Base64/Sub1_base64.txt",
