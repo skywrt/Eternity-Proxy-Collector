@@ -19,7 +19,6 @@ Eternity Proxy Collector 是一个自动化工具，旨在帮助用户管理和�
 
 ### 安装命令
 
-```sh
 # 安装 Python 依赖
 pip install -r requirements.txt
 
