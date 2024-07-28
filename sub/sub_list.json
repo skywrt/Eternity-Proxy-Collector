@@ -11,7 +11,7 @@
     "id": 1,
     "remarks": "hkpc/V2ray-Configs",
     "site": "https://github.com/hkpc/V2ray-Configs",
-    "url": "https://raw.githubusercontent.com/hkpc/V2ray-Configs/main/All_Configs_Sub.txt",
+    "url": "https://raw.githubusercontent.com/hkpc/V2ray-Configs/main/All_Configs_base64_Sub.txt",
     "update_method": "auto",
     "enabled": true
   },
