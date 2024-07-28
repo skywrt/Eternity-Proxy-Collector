@@ -20,7 +20,16 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y curl bc speedtest-cli
+          sudo apt-get install -y python3-pip wget tar bc curl
+          sudo pip3 install speedtest-cli
+
+      - name: Running Collector
+        run: |
+          wget -O subconverter.tar.gz https://github.com/tindy2013/subconverter/releases/download/v0.7.2/subconverter_linux64.tar.gz
+          tar -zxvf subconverter.tar.gz -C ./
+          chmod +x ./subconverter/subconverter && nohup ./subconverter/subconverter >./subconverter.log 2>&1 &
+          node ./utils/localserver/index.js &
+          sleep 2
       
       - name: Download and process subscriptions
         run: |
@@ -32,7 +41,7 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
-          git commit -m"由github actions推送,日期:`date`"
+          git commit -m "由github actions推送,日期:`date`"
           git pull --rebase
 
       - name: Push changes
