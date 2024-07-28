@@ -34,7 +34,7 @@ check_node_connectivity() {
 
 get_node_speed() {
     local speed=$(speedtest-cli --simple | grep "Download:" | awk '{print $2}')
-    if (( $(echo "$speed > 1" | bc -l) )); then
+    if [ $(echo "$speed > 1" | bc) -eq 1 ]; then
         echo "$speed"
     else
         echo "0"
@@ -48,8 +48,8 @@ echo "节点检测和测速..."
 while read -r node; do
     if [ $(check_node_connectivity "https://www.google.com") -eq 1 ]; then
         speed=$(get_node_speed)
-        if (( $(echo "$speed > 1" | bc -l) )); then
-            if [[ $node == *"vmess"* ]]; then
+        if [ $(echo "$speed > 1" | bc) -eq 1 ]; then
+            if echo "$node" | grep -q "vmess"; then
                 valid_v2ray_nodes="$valid_v2ray_nodes\n$node"
             else
                 valid_clash_nodes="$valid_clash_nodes\n$node"
