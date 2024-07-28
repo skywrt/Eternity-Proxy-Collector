@@ -10,40 +10,6 @@ Eternity Proxy Collector 是一个自动化工具，旨在帮助用户管理和�
 - 测试代理节点的速度和可用性
 - 更新 README 文件以反映最新的节点信息
 
-## 依赖安装
-
-请确保安装以下依赖：
-- Python 3.11
-- Node.js 18.x
-- 必要的 Python 和 Node.js 包
-
-### 安装命令
-
-# 安装 Python 依赖
-pip install -r requirements.txt
-
-# 安装 Node.js 依赖
-cd utils/localserver
-npm install
-
-# 使用方法
-
-## 本地运行
-
-### 更新订阅链接
-
-python list_merge.py
-
-### 测试代理节点
-
-python test_proxies.py
-
-# GitHub Actions
-本项目配置了 GitHub Actions 工作流，每天自动运行两次。您可以手动触发工作流或在特定路径有更改时自动触发。
-
-## 手动触发工作流
-在 GitHub 仓库的 Actions 页面，选择相应的工作流并手动触发。
-
 # 文件说明
 
 ## 脚本文件
