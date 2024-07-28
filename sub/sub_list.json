@@ -22,5 +22,13 @@
     "url": "https://raw.githubusercontent.com/mahdibland/ShadowsocksAggregator/master/Eternity",
     "update_method": "auto",
     "enabled": true
+  },
+  {
+    "id": 4,
+    "remarks": "hkpc/V2ray-Configs",
+    "site": "https://github.com/hkpc/V2ray-Configs",
+    "url": "https://raw.githubusercontent.com/hkpc/V2ray-Configs/main/Base64/Sub1_base64.txt",
+    "update_method": "auto",
+    "enabled": true
   }
 ]
