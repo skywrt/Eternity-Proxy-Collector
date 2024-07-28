@@ -32,12 +32,10 @@ npm install
 
 ### 更新订阅链接
 
-```sh
 python list_merge.py
 
 ### 测试代理节点
 
-```sh
 python test_proxies.py
 
 # GitHub Actions
