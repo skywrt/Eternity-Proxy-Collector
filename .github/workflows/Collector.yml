@@ -28,7 +28,7 @@ jobs:
           cache: "pip"
 
       - name: Set Timezone
-        run: sudo timedatectl set-timezone 'Asia/Tehran'
+        run: sudo timedatectl set-timezone 'Asia/Shanghai'
 
       - name: Install Requirements
         run: pip install -r requirements.txt
@@ -49,6 +49,8 @@ jobs:
           git pull origin main
           git add ./sub ./utils/Country.mmdb README.md
           git commit -m "✔️ $(date '+%Y-%m-%d %H:%M:%S') Collected"
+
+      - name: Push Changes
         uses: ad-m/github-push-action@master
         with:
           branch: main
@@ -59,13 +61,15 @@ jobs:
           sudo sh speedtest2_yaml.sh
           python output.py
 
-      - name: Commit changes
+      - name: Commit Speedtest Results
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git pull origin main
           git add EternityBase Eternity Eternity.txt ./sub/sub_merge.txt ./sub/sub_merge_base64.txt LogInfo.txt ./sub/splitted/*
           git commit -m "✔️ $(date '+%Y-%m-%d %H:%M:%S') Tested"
+
+      - name: Push Speedtest Results
         uses: ad-m/github-push-action@master
         with:
           branch: main
@@ -78,7 +82,7 @@ jobs:
           chmod +x ./subconverter/subconverter && nohup ./subconverter/subconverter >./subconverter.log 2>&1 &
           python eternity_convert.py
 
-      - name: Commit changes
+      - name: Commit Converted Results
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
@@ -86,6 +90,8 @@ jobs:
           git add Eternity.yml Eternity README.md ./update/* LogInfo.txt
           git clean -f -d
           git commit -m "✔️ $(date '+%Y-%m-%d %H:%M:%S') Filtered"
+
+      - name: Push Converted Results
         uses: ad-m/github-push-action@master
         with:
           branch: main
