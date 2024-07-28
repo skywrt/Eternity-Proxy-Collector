@@ -40,7 +40,7 @@ jobs:
           chmod +x ./subconverter/subconverter && nohup ./subconverter/subconverter >./subconverter.log 2>&1 &
           node ./utils/localserver/index.js &
           sleep 2
-          python list_merge.py
+          python ./utils/list_merge.py
 
       - name: Commit Changes
         run: |
