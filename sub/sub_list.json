@@ -30,13 +30,5 @@
     "url": "https://raw.githubusercontent.com/hkpc/V2ray-Configs/main/Base64/Sub1_base64.txt",
     "update_method": "auto",
     "enabled": true
-  },
-  {
-    "id": 4,
-    "remarks": "changfengoss/pub",
-    "site": "https://github.com/changfengoss/pub",
-    "url": "https://raw.githubusercontent.com/changfengoss/pub/main/data/2024_07_28/SC2dkv.yaml",
-    "update_method": "page_release",
-    "enabled": true
   }
 ]
